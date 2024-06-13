@@ -1,0 +1,1 @@
+ToolKit is a NuGet package that provides a wide range of functionality to improve the handling and manipulation of common data types in C#.
