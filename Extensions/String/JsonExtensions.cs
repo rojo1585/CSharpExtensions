@@ -21,4 +21,16 @@ public static class JsonExtensions
             throw new JsonException("No fue posible convertir la cadena");
         }
     }
+    public static bool IsValidJson(this string str)
+    {
+        try
+        {
+            JsonDocument.Parse(str);
+            return true;
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
 }
