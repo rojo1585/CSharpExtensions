@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Red.ToolKit.Helpers;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -40,15 +41,12 @@ public static class JsonExtensions
         JsonObject? json = JsonSerializer.Deserialize<JsonObject>(str);
         json?.Add(key, value);
 
-        using MemoryStream stream = new();
-
-        JsonSerializer.Serialize(stream, json);
-        stream.Seek(0, SeekOrigin.Begin);
-
-        using (StreamReader sr = new(stream))
-        {
-            str = sr.ReadToEnd();
-        }
-        return str;
+        return JsonHelper.CastToJson(json);
+    }
+    public static string RemoveJsonElement(this string str, string key)
+    {
+        JsonObject? json = JsonSerializer.Deserialize<JsonObject>(str);
+        json?.Remove(key);
+        return JsonHelper.CastToJson(json);
     }
 }

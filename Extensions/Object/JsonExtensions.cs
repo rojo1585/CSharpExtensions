@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using System.Text.Json;
+﻿using Red.ToolKit.Helpers;
+using System.Reflection;
 
 namespace Red.ToolKit.Extensions.Object;
 
@@ -7,20 +7,8 @@ public static class JsonExtensions
 {
     private static readonly Dictionary<Type, object> defaultValues = [];
     public static string ToJson<T>(this T obj) where T : class
-    {
-        string jsonString;
-        using MemoryStream stream = new();
+        => JsonHelper.CastToJson(obj);
 
-        JsonSerializer.Serialize(stream, obj);
-        stream.Seek(0, SeekOrigin.Begin);
-
-        using (StreamReader sr = new(stream))
-        {
-            jsonString = sr.ReadToEnd();
-        }
-
-        return jsonString;
-    }
 
     public static T InitializingNullProperties<T>(this T? obj) where T : class
     {
