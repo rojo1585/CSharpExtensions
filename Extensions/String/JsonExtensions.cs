@@ -49,4 +49,14 @@ public static class JsonExtensions
         json?.Remove(key);
         return JsonHelper.CastToJson(json);
     }
+    public static bool TryGetJsonValue(this string str, string key, out string? value)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(key);
+        var dic = JsonSerializer.Deserialize<Dictionary<string, string>>(str);
+        _ = dic ?? throw new ArgumentException("It is necessary to have json format");
+        if (dic.TryGetValue(key, out value))
+            return true;
+
+        return false;
+    }
 }
